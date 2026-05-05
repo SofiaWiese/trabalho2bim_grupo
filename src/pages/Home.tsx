@@ -1,9 +1,16 @@
-export default function Home({ onAdd }) {
-  return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="flex items-center justify-center py-24 px-4">
-        <h1 className="text-4xl font-bold text-gray-900">Bem-vindo!</h1>
-      </div>
-    </main>
-  );
+import { useAppNavigation } from "../hooks/useNavigation";
+import { useStore } from "../hooks/useStore";
+
+const Home =({...props})=>{
+    const {goToCart, goToCheckout, goToProduct} = useAppNavigation()
+    const { products, loading, addToCart } = useStore();
+    if(loading)return<div>Loading</div>
+    return(
+        <div {...props} className="flex flex-col">
+            <button className="cursor-pointer" onClick={goToCart}>Carrinho</button>
+            <button className="cursor-pointer" onClick={goToCheckout}>Checkout</button>
+            <button className="cursor-pointer" onClick={(id)=>goToProduct('1')}>Produtos</button>
+        </div>
+    )
 }
+export default Home
