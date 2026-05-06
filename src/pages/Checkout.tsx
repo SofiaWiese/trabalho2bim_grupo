@@ -145,10 +145,6 @@ export default function Checkout() {
             <span>R$ 199,90</span>
           </div>
 
-          <p className="text-xs mt-4 underline cursor-pointer">
-            Adicionar cupom de desconto
-          </p>
-
         </div>
 
       </div>
