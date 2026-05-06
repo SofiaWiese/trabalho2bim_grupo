@@ -4,7 +4,7 @@ const ProductDetail = () => {
   const [tamanho, setTamanho] = useState(37);
   const [quantidade, setQuantidade] = useState(1);
 
-  const [nome, setNome] = useState("Tênis Pica");
+  const [nome, setNome] = useState("Nike Zoo Academi 2");
   const [preco, setPreco] = useState("689,00");
   const [descricao, setDescricao] = useState(
     "Com a facilidade do calçar e a autenticidade HS, o Sneaker Calle Cinza é mais do que um simples calçado; ele é uma expressão das ruas latinas, trazendo praticidade e muita personalidade para os seus pés."
@@ -18,9 +18,19 @@ const ProductDetail = () => {
 
   const [imagemPrincipal, setImagemPrincipal] = useState(imagens[0]);
 
+  
+  const [fade, setFade] = useState(false);
+
+  const trocarImagem = (img) => {
+    setFade(true);
+    setTimeout(() => {
+      setImagemPrincipal(img);
+      setFade(false);
+    }, 150);
+  };
+
   const tamanhos = [37, 38, 39, 40, 41, 42, 43, 44];
 
-  
   const avaliacao = 4;
 
   const renderStars = (nota) => {
@@ -44,41 +54,59 @@ const ProductDetail = () => {
 
       <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-8 md:gap-16 text-black w-full max-w-6xl">
 
+        
         <div className="flex flex-col gap-4 w-full md:w-auto">
 
-          <img
-            className="w-full max-w-[400px] md:max-w-[500px] mx-auto"
-            src={imagemPrincipal}
-            alt="img tenis"
-          />
+          
+          <div className="overflow-hidden rounded-xl">
+            <img
+              className={`w-full max-w-[400px] md:max-w-[500px] mx-auto transition-all duration-300 hover:scale-110 ${
+                fade ? "opacity-0" : "opacity-100"
+              }`}
+              src={imagemPrincipal}
+              alt="img tenis"
+            />
+          </div>
 
+          
           <div className="flex gap-2 md:gap-4 justify-center">
             {imagens.map((img, index) => (
               <img
                 key={index}
                 src={img}
-                onClick={() => setImagemPrincipal(img)}
-                className={`w-20 md:w-24 cursor-pointer border ${
+                onClick={() => trocarImagem(img)}
+                className={`w-20 md:w-24 cursor-pointer border rounded transition-all duration-200 ${
                   imagemPrincipal === img
-                    ? "border-black"
-                    : "border-gray-300"
+                    ? "border-black scale-110"
+                    : "border-gray-300 hover:scale-105"
                 }`}
               />
             ))}
           </div>
 
+          
+          <div className="mt-6 max-w-[500px] mx-auto md:mx-0">
+            <h2 className="text-xl md:text-2xl font-bold mb-2">
+              Descrição do Produto
+            </h2>
+
+            <p className="text-sm md:text-base leading-6 md:leading-8 text-gray-700">
+              {descricao}
+            </p>
+          </div>
+
         </div>
 
+        
         <div className="flex flex-col gap-4 w-full md:w-[350px]">
 
           <h2 className="text-xl md:text-2xl font-bold">
             {nome}
           </h2>
 
-         
-          <div className="flex items-center gap-2 text-yellow-500 text-sm">
+          <div className=" gap-2 text-yellow-500 text-sm">
             {renderStars(avaliacao)}
-            <span className="text-gray-500">(69 avaliações)</span>
+            <span className="text-gray-500">(124 avaliações)</span>
           </div>
 
           <h2 className="text-lg md:text-xl">
@@ -125,22 +153,12 @@ const ProductDetail = () => {
               </button>
             </div>
 
-            <button className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 w-full md:w-auto">
+            <button className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 w-full md:w-auto hover:scale-105 transition-all">
               Comprar
             </button>
 
           </div>
         </div>
-      </div>
-
-      <div className="mt-8 max-w-[900px] text-black">
-        <h2 className="text-xl md:text-3xl font-bold mb-2 md:mb-4">
-          Descrição do Sapato
-        </h2>
-
-        <p className="leading-7 md:leading-9 text-sm md:text-lg">
-          {descricao}
-        </p>
       </div>
 
     </div>
