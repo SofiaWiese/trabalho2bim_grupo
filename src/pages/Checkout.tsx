@@ -1,80 +1,153 @@
 import { useState } from "react"
 
-const Checkout =({...props})=>{
-    const [nome, setNome]= useState("")
-    const [sobrenome, setSobrenome]= useState("")
-    const [telefone, setTelefone]= useState("")
-    const [cep, setCEP]= useState("")
-    const [numeroCasa, setNumeroCasa]= useState("")
+export default function Checkout() {
+  const [form, setForm] = useState({
+    email: "",
+    nome: "",
+    sobrenome: "",
+    telefone: "",
+    cep: "",
+    endereco: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    numero: "",
+    complemento: "",
+    cpf: ""
+  })
 
-    return<div className="w-full h-full bg-green-200"{...props}>
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
-        <h2 className="text-2xl font-bold text-center mt-6">Checkout</h2>
+  const handleSubmit = () => {
+    for (let key in form) {
+      if (!form[key]) {
+        alert("Preencha todos os campos")
+        return
+      }
+    }
+    alert("Pedido finalizado")
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f5f5f5] text-sm text-gray-800">
 
 
-        <div className="flex flex-col m-1 items-stretch md:items-center bg-white rounded-lg m-40 p-10 ">
-            <h3 className="text-lg font-semibold mb-4">Endereço</h3>
-            <div className="flex flex-row m-2">
-                <p>Nome: </p>
-                <input type="text" placeholder="Digite aqui seu nome" value={nome} onChange={(value)=>setNome(value)}></input>
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-8 p-6">
+
+        <div className="lg:col-span-2">
+
+          <p className="mb-2">Dados de contato</p>
+
+          <input
+            name="email"
+            placeholder="E-mail"
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-3 mb-3 bg-white"
+          />
+
+          <p className="mb-2">Entrega</p>
+
+          <div className="border border-gray-300 bg-gray-100 p-4 mb-4 flex justify-between">
+            <div>
+              <p>Nuvem Envio Correios PAC</p>
+              <p className="text-xs text-gray-500">Entrega padrão</p>
             </div>
-            <div className="flex flex-row m-2">
-                <p>Sobrenome: </p>
-                <input type="text" placeholder="Digite aqui seu sobrenome" value={sobrenome} onChange={(value)=>setSobrenome(value)}></input>
+            <span>Grátis</span>
+          </div>
+          
+          <div className="p-5">
+          <p className="mb-2 p-2">Dados para entrega</p>
+
+          <div className="grid grid-cols-2 gap-3">
+            <input name="nome" placeholder="Nome" onChange={handleChange}
+              className="border p-3 bg-white"/>
+            <input name="sobrenome" placeholder="Sobrenome" onChange={handleChange}
+              className="border p-3 bg-white"/>
+          </div>
+
+          <input name="telefone" placeholder="Telefone com DDD"
+            onChange={handleChange}
+            className="w-full border p-3 mt-3 bg-white"/>
+
+          <input name="cep" placeholder="CEP"
+            onChange={handleChange}
+            className="w-full border p-3 mt-3 bg-white"/>
+
+          <input name="endereco" placeholder="Endereço"
+            onChange={handleChange}
+            className="w-full border p-3 mt-3 bg-white"/>
+
+          <input name="bairro" placeholder="Bairro"
+            onChange={handleChange}
+            className="w-full border p-3 mt-3 bg-white"/>
+
+          <div className="flex gap-3 mt-3">
+            <input name="cidade" placeholder="Cidade"
+              onChange={handleChange}
+              className="border p-3 w-1/2 bg-white"/>
+            <input name="estado" placeholder="Estado"
+              onChange={handleChange}
+              className="border p-3 w-1/2 bg-white"/>
+          </div>
+
+          <div className="flex gap-3 mt-3">
+            <input name="numero" placeholder="Número"
+              onChange={handleChange}
+              className="border p-3 w-1/2 bg-white"/>
+            <input name="complemento" placeholder="Complemento"
+              onChange={handleChange}
+              className="border p-3 w-1/2 bg-white"/>
+          </div>
+          </div>
+
+          <div className="p-5">
+          <p className="mt-6 mb-2">Dados para nota fiscal</p>
+
+          <input name="cpf" placeholder="CPF ou CNPJ"
+            onChange={handleChange}
+            className="w-full border p-3 mb-3 bg-white"/>
             </div>
-            <div className="flex flex-row m-2">
-                <p>Telefone: </p>
-                <input type="text" placeholder="Digite aqui seu telefone" value={telefone} onChange={(value)=>setTelefone(value)}></input>
-            </div>
-            <div className="flex flex-row m-2">
-                <p>CEP: </p>
-                <input type="text" placeholder="Digite aqui seu CEP" value={cep} onChange={(value)=>setCEP(value)}></input>
-            </div>
-            <div className="flex flex-row m-2">
-                <p>Número da casa: </p>
-                <input type="text" placeholder="Digite aqui o número da sua casa" value={numeroCasa} onChange={(value)=>setNumeroCasa(value)}></input>
-            </div>
+
+          <button
+            onClick={handleSubmit}
+            className="bg-black text-white px-6 py-3 w-full md:w-auto"
+          >
+            Continuar para pagamento
+          </button>
+
         </div>
 
-        <div className="flex flex-col w-full max-w-xl bg-white rounded-lg p-6 shadow">
-            <h3 className="text-lg font-semibold mb-4">Tipo de entrega</h3>
-            <div className="flex flex-row m-2">
-                <input type="radio" id="padrao" name="entrega"></input>
-                <label htmlFor="padrao"> Entega padrão (R$0,00)</label>
+        <div className="bg-[#f0f0f0] p-6 h-fit">
+
+          <div className="flex gap-4 mb-4">
+            <div className="w-16 h-16 bg-gray-300"></div>
+            <div>
+              <p>Produto</p>
+              <p className="text-xs">Descrição x1</p>
             </div>
-            <div className="flex flex-row m-2">
-                <input type="radio" id="rapida" name="entrega"></input>
-                <label htmlFor="rapida">Entega rápida (R$10,00)</label>
-            </div>
-            <div className="flex flex-row m-2">
-                <input type="radio" id="super_rapida" name="entrega"></input>
-                <label htmlFor="super_rapida">Entrega super-rápida (R$25,00)</label>
-            </div>
+            <span className="ml-auto">R$ 199,90</span>
+          </div>
+
+          <div className="flex justify-between text-sm mb-2">
+            <span>Subtotal</span>
+            <span>R$ 199,90</span>
+          </div>
+
+          <div className="flex justify-between text-sm mb-2">
+            <span>Frete</span>
+            <span>Grátis</span>
+          </div>
+
+          <div className="flex justify-between font-semibold mt-4">
+            <span>Total</span>
+            <span>R$ 199,90</span>
+          </div>
+
         </div>
 
-        <div className="flex flex-col items-stretch md:items-center bg-white rounded-lg m-20 p-10">
-            <h3 className="text-lg font-semibold mb-4">Forma de pagamento</h3>
-            <div className="flex flex-row m-2">
-                <input type="radio" id="credito" name="pagamento"></input>
-                <label htmlFor="credito"> Cartão de crédito</label>
-            </div>
-            <div className="flex flex-row m-2">
-                <input type="radio" id="pix" name="pagamento"></input>
-                <label htmlFor="pix"> PIX</label>
-            </div>
-            <div className="flex flex-row m-2">
-                <input type="radio" id="debito" name="pagamento"></input>
-                <label htmlFor="debito"> Cartão de débito</label>
-            </div>
-        </div>
-
-        <div>
-            <h3>Resumo do pedido</h3>
-        </div>
-
-        <div>
-            <input type="button" value="Finalizar Pedido" className="flex items-stretch md:items-center bg-white rounded-lg"></input>
-        </div>
+      </div>
     </div>
+  )
 }
-export default Checkout
